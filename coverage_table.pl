@@ -10,46 +10,33 @@ Ruhr-university Bochum
 44801 Bochum, Germany
 
 =head2 VERSION
-Verion #3 from 08.10.2013
-Previous script: "count-read-length.pl"
-Verion #2: Add arguments and argument count for optimized usage.
-Version #3: Add parameters for fastq analysis and count for all sequences.
+Verion #1 from 08.10.2020
 
 =head3 DISCRIPTION
-Reads a multi-fasta file and calculates the size and the number of nucleotide or amino acid sequences with this size and prints out a tab delimited file.
-The output-file contains the calculation in this type: "seqlength" \t "seqnumber"
+Reads in several 'depth' output files from BEDtools and combines them to a output file containing the read depths of all samples for C. neoformans chr01 from position 2200000 until its end.
+This was independently performed for the forward and reverse strand of C. neoformans chr01.
+The output file contains the read depth for that specified region for all five samples.
 
 =head4 USAGE
-perl count-read-length.pl input.fasta output.txt
+perl coverage_table.pl
 
 =cut
 
-# Bestimmung der Anzahl an Reads mit gleicher Readlaenge und Ausgabe
-
-# check if we have the correct number of arguments
-#my $num_args = $#ARGV + 1;
-#if ($num_args != 2) {
-#  print "\nUsage: perl read-length.pl inputfile.sam outputfile.txt";
-#  exit;
-#}
-
-#my $inputfile=$ARGV[0]; # <= Inputfile
-#my $outputfile=$ARGV[1]; # <= Outputfile
-
-my $file1 = "H99_forward_depth.txt";	# <= Inputfile
-my $file2 = "Bt81_forward_depth.txt";	# <= Inputfile
-my $file3 = "Bt65_forward_depth.txt";	# <= Inputfile
+# Hardcoded input and output
+my $file1 = "H99_forward_depth.txt";		# <= Inputfile
+my $file2 = "Bt81_forward_depth.txt";		# <= Inputfile
+my $file3 = "Bt65_forward_depth.txt";		# <= Inputfile
 my $file4 = "Bt65_ZNF3_T1_forward_depth.txt";	# <= Inputfile
 my $file5 = "Bt65_ZNF3_T2_forward_depth.txt";	# <= Inputfile
-my $outputfile = "merged_forward_table.txt";			# <= Outputfile
+my $outputfile = "merged_forward_table.txt";	# <= Outputfile
 
 print ("Open inputfiles...\n");
-open INPUT1, "< $file1" or die {"Can't open inputfile $file1!\n"}; # Öffnen der Inputfile
-open INPUT2, "< $file2" or die {"Can't open inputfile $file2!\n"}; # Öffnen der Inputfile
-open INPUT3, "< $file3" or die {"Can't open inputfile $file3!\n"}; # Öffnen der Inputfile
-open INPUT4, "< $file4" or die {"Can't open inputfile $file4!\n"}; # Öffnen der Inputfile
-open INPUT5, "< $file5" or die {"Can't open inputfile $file5!\n"}; # Öffnen der Inputfile
-open OUTPUT, "> $outputfile"; # Öffnen der Outputfile
+open INPUT1, "< $file1" or die {"Can't open inputfile $file1!\n"}; # Open inputfile
+open INPUT2, "< $file2" or die {"Can't open inputfile $file2!\n"}; # Open inputfile
+open INPUT3, "< $file3" or die {"Can't open inputfile $file3!\n"}; # Open inputfile
+open INPUT4, "< $file4" or die {"Can't open inputfile $file4!\n"}; # Open inputfile
+open INPUT5, "< $file5" or die {"Can't open inputfile $file5!\n"}; # Open inputfilee
+open OUTPUT, "> $outputfile"; # Ã–ffnen der Outputfile
 print ("Read in all inputfiles successfully!\n");
 
 my $whole_seq =0;
@@ -129,3 +116,5 @@ close INPUT3;
 close INPUT4;
 close INPUT5;
 close OUTPUT;
+
+exit;

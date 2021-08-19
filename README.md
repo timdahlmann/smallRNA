@@ -1,7 +1,7 @@
 # smallRNA
 Scripts for small RNA data analysis
 
-Collection of Perl 5.26.2 script for handling small RNA Illumina data sets.
+Collection of Perl 5.26.2 scripts for handling small RNA Illumina data sets.
 
 AUTHOR: 
 Dr. Tim A. Dahlmann

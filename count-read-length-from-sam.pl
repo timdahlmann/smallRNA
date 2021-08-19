@@ -13,14 +13,14 @@ Ruhr-university Bochum
 Verion #3 from 08.10.2013
 Previous script: "count-read-length.pl"
 Verion #2: Add arguments and argument count for optimized usage.
-Version #3: Add parameters for fastq analysis and count for all sequences.
+Version #3: The script count_read_length.pl was adapted for the usage with .sam files created by BEDtools.
 
 =head3 DISCRIPTION
 Reads a multi-fasta file and calculates the size and the number of nucleotide or amino acid sequences with this size and prints out a tab delimited file.
 The output-file contains the calculation in this type: "seqlength" \t "seqnumber"
 
 =head4 USAGE
-perl count-read-length.pl input.fasta output.txt
+perl count-read-length-from-sam.pl input.fasta output.txt
 
 =cut
 
@@ -29,21 +29,18 @@ perl count-read-length.pl input.fasta output.txt
 # check if we have the correct number of arguments
 my $num_args = $#ARGV + 1;
 if ($num_args != 2) {
-  print "\nUsage: perl read-length.pl inputfile.sam outputfile.txt";
+  print "\nUsage: perl count-read-length-from-sam inputfile.sam outputfile.txt";
   exit;
 }
 
 my $inputfile=$ARGV[0]; # <= Inputfile
 my $outputfile=$ARGV[1]; # <= Outputfile
 
-# my $inputfile = "NG-6795_Sample_2_cutadapt_only-with-a+g-trimmed_mapped.fa";	# <= Inputfile
-# my $outputfile = "NG-6795_Sample_2_cutadapt_only-with-a+g-trimmed_mapped.txt";			# <= Outputfile
-
-open INPUT, "< $inputfile" or die {"Can't open inputfile!\n"}; # Öffnen der Inputfile
-open OUTPUT, "> $outputfile"; # Öffnen der Outputfile
+open INPUT, "< $inputfile" or die {"Can't open inputfile!\n"}; # Open inputfile
+open OUTPUT, "> $outputfile"; # Open outputfile
 
 my @daten;
-chomp (@daten = <INPUT>);	# Entfernen aller newlines
+chomp (@daten = <INPUT>);	# Get rid of all newlines
 
 my $whole_seq =0;
 my $seq_laenge;
@@ -57,11 +54,11 @@ for (my $i=14; $i <= 73; $i++) {	# $max is the afore calculated maximal clonalit
 
 
 foreach (@daten) {
-	if ($_ =~ /0\t([ATGCNRYSWKM]+)\t/) {	# Identifiziert die Identifier
+	if ($_ =~ /0\t([ATGCNRYSWKM]+)\t/) {	
 		my $seq = $1;
 		$whole_seq += length($1);
-		$seq_laenge = length($1);	# Bestimmung der Sequenzlängen aller Sequenzen
-		$hashall{"$seq_laenge"} +=1;	# Schreiben der Anzahl der Sequenzlängen in %hash
+		$seq_laenge = length($1);	
+		$hashall{"$seq_laenge"} +=1;	
 	}
 }
 
@@ -92,8 +89,8 @@ for (my $i=14; $i <= 73; $i++) {	# $max is the afore calculated maximal clonalit
 foreach (@daten) {
 	if ($_ =~ /0\t(T[ATGCNRYSWKM]+)\t/) {	# Identifiziert die Identifier
 		my $seq = $1;
-		$seq_laengeU = length($1);	# Bestimmung der Sequenzlängen aller Sequenzen
-		$hashU{"$seq_laengeU"} +=1;	# Schreiben der Anzahl der Sequenzlängen in %hash
+		$seq_laengeU = length($1);	# Bestimmung der SequenzlÃ¤ngen aller Sequenzen
+		$hashU{"$seq_laengeU"} +=1;	# Schreiben der Anzahl der SequenzlÃ¤ngen in %hash
 	}
 }
 
@@ -116,8 +113,8 @@ for (my $i=14; $i <= 73; $i++) {	# $max is the afore calculated maximal clonalit
 foreach (@daten) {
 	if ($_ =~ /0\t(A[ATGCNRYSWKM]+)\t/) {	# Identifiziert die Identifier
 		my $seq = $1;
-		$seq_laengeA = length($1);	# Bestimmung der Sequenzlängen aller Sequenzen
-		$hashA{"$seq_laengeA"} +=1;	# Schreiben der Anzahl der Sequenzlängen in %hash
+		$seq_laengeA = length($1);	# Bestimmung der SequenzlÃ¤ngen aller Sequenzen
+		$hashA{"$seq_laengeA"} +=1;	# Schreiben der Anzahl der SequenzlÃ¤ngen in %hash
 	}
 }
 
@@ -140,8 +137,8 @@ for (my $i=14; $i <= 73; $i++) {	# $max is the afore calculated maximal clonalit
 foreach (@daten) {
 	if ($_ =~ /0\t(G[ATGCNRYSWKM]+)\t/) {	# Identifiziert die Identifier
 		my $seq = $1;
-		$seq_laengeG = length($1);	# Bestimmung der Sequenzlängen aller Sequenzen
-		$hashG{"$seq_laengeG"} +=1;	# Schreiben der Anzahl der Sequenzlängen in %hash
+		$seq_laengeG = length($1);	# Bestimmung der SequenzlÃ¤ngen aller Sequenzen
+		$hashG{"$seq_laengeG"} +=1;	# Schreiben der Anzahl der SequenzlÃ¤ngen in %hash
 	}
 }
 
@@ -164,8 +161,8 @@ for (my $i=14; $i <= 73; $i++) {	# $max is the afore calculated maximal clonalit
 foreach (@daten) {
 	if ($_ =~ /0\t(C[ATGCNRYSWKM]+)\t/) {	# Identifiziert die Identifier
 		my $seq = $1;
-		$seq_laengeC = length($1);	# Bestimmung der Sequenzlängen aller Sequenzen
-		$hashC{"$seq_laengeC"} +=1;	# Schreiben der Anzahl der Sequenzlängen in %hash
+		$seq_laengeC = length($1);	# Bestimmung der SequenzlÃ¤ngen aller Sequenzen
+		$hashC{"$seq_laengeC"} +=1;	# Schreiben der Anzahl der SequenzlÃ¤ngen in %hash
 	}
 }
 

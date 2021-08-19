@@ -11,16 +11,12 @@ Ruhr-university Bochum
 
 =head2 VERSION
 Verion #3 from 08.10.2013
-Previous script: "count-read-length.pl"
-Verion #2: Add arguments and argument count for optimized usage.
-Version #3: Add parameters for fastq analysis and count for all sequences.
+Previous script: "extract-alignments-from-sam.pl"
 
 =head3 DISCRIPTION
-Reads a multi-fasta file and calculates the size and the number of nucleotide or amino acid sequences with this size and prints out a tab delimited file.
-The output-file contains the calculation in this type: "seqlength" \t "seqnumber"
-
+Reads in a .sam alignment file from SAMtools and prints out a fasta file with all aligned sequences.
 =head4 USAGE
-perl count-read-length.pl input.fasta output.txt
+perl extract-alignments-from-sam.pl input.sam output.fa
 
 =cut
 
@@ -29,27 +25,21 @@ perl count-read-length.pl input.fasta output.txt
 # check if we have the correct number of arguments
 my $num_args = $#ARGV + 1;
 if ($num_args != 2) {
-  print "\nUsage: perl read-length.pl inputfile.sam outputfile.txt";
+  print "\nUsage: perl extract-alignments-from-sam.pl inputfile.sam outputfile.txt";
   exit;
 }
 
-my $inputfile=$ARGV[0]; # <= Inputfile
-my $outputfile=$ARGV[1]; # <= Outputfile
+my $inputfile=$ARGV[0]; # <= Input file
+my $outputfile=$ARGV[1]; # <= Output file
 
-# my $inputfile = "NG-6795_Sample_2_cutadapt_only-with-a+g-trimmed_mapped.fa";	# <= Inputfile
-# my $outputfile = "NG-6795_Sample_2_cutadapt_only-with-a+g-trimmed_mapped.txt";			# <= Outputfile
-
-open INPUT, "< $inputfile" or die {"Can't open inputfile!\n"}; # Öffnen der Inputfile
-open OUTPUT, "> $outputfile"; # Öffnen der Outputfile
-
-#my @daten = <INPUT>;
-#chomp (@daten = <INPUT>);	# Entfernen aller newlines
+open INPUT, "< $inputfile" or die {"Can't open inputfile!\n"}; # Ã–ffnen der Inputfile
+open OUTPUT, "> $outputfile"; # Open Output file
 
 my @out;
 my $counter = 0;
 
 while (<INPUT>) {
-	if (($_ =~ /^[0-9A-Z_a-z]/) and ($_ =~ /0\t([ATGCNRYSWKM]+)\t/)) {	# Identifiziert die Identifier
+	if (($_ =~ /^[0-9A-Z_a-z]/) and ($_ =~ /0\t([ATGCNRYSWKM]+)\t/)) {	# Get the identifier
 		$counter ++;
 		my $seq = $1;
 		push (@out, ">read_$counter\n$seq\n");

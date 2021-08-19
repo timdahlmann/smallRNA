@@ -9,11 +9,11 @@ Chair of General and Molecular Botany
 Ruhr-University Bochum
 
 =head2 DISCRIPTION
-The script gff2togff3.pl converts gff2 in gff3 format. For each entry inside the gff2 file it creates a gene entry and a corresponding features 
+The script rename_TEs.pl converts a gff2 with information about transposable elements within C. neoformans in gff3 format. For each entry inside the gff2 file it creates a gene entry and a corresponding features. 
 
 =head3 VERSION
 version 1.0
-03.06.2014
+08.10.2020
 
 =head4 USAGE
 

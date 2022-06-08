@@ -31,7 +31,7 @@ perl collapse_reads.pl input.fa Cn1 output.fa
 # check if we have the correct number of arguments
 my $num_args = $#ARGV + 1;
 if ($num_args != 3) {
-  print "\nUsage: perl collapse_reads.pl input.fa Cn1 output.fa\n";
+  print "\nUsage: perl collapse_reads.pl input.fa prefix output.fa\n";
   exit;
 }
 
